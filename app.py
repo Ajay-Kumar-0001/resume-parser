@@ -9,7 +9,7 @@ UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 app = Flask(__name__)
-app.secret_key = "dev-secret-key"
+app.secret_key = os.getenv("SECRET_KEY", "dev-secret-key")
 app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024  # 10MB
 
 
@@ -55,4 +55,4 @@ def api_candidates():
 
 if __name__ == "__main__":
     db.init_db()
-    app.run(debug=True)
+    app.run()
