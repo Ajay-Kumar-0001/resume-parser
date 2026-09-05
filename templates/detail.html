@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ c.name or c.filename }}</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; }
+    pre { background: #f4f4f4; padding: 10px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <a href="/">&larr; Back</a>
+  <h1>{{ c.name or "Unknown" }}</h1>
+  <p><b>Email:</b> {{ c.email or "-" }}</p>
+  <p><b>Phone:</b> {{ c.phone or "-" }}</p>
+  <p><b>Skills:</b> {{ (c.skills or [])|join(", ") }}</p>
+  <p><b>Education:</b></p>
+  <ul>{% for e in (c.education or []) %}<li>{{ e }}</li>{% endfor %}</ul>
+  <p><b>Experience (years):</b> {{ c.experience_years or "-" }}</p>
+  <h3>Raw Extracted Text</h3>
+  <pre>{{ c.raw_text }}</pre>
+</body>
+</html>

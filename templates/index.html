@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resume Parser</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 40px auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; font-size: 14px; }
+    th { background: #f4f4f4; }
+    .flash { background: #e6ffe6; padding: 10px; margin-bottom: 10px; border-radius: 4px; }
+    a { color: #0066cc; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h1>Resume Parser</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for m in messages %}<div class="flash">{{ m }}</div>{% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="resume" accept="application/pdf" required>
+    <button type="submit">Upload & Parse</button>
+  </form>
+
+  <table>
+    <tr>
+      <th>Name</th><th>Email</th><th>Phone</th><th>Skills</th><th>Exp (yrs)</th><th></th>
+    </tr>
+    {% for c in candidates %}
+    <tr>
+      <td>{{ c.name or "-" }}</td>
+      <td>{{ c.email or "-" }}</td>
+      <td>{{ c.phone or "-" }}</td>
+      <td>{{ (c.skills or [])|join(", ") }}</td>
+      <td>{{ c.experience_years or "-" }}</td>
+      <td><a href="/candidate/{{ c.id }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
